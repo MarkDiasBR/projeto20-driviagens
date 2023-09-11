@@ -73,6 +73,34 @@ const travel = joi.object({
         .required()
 })
 
-const schemas = { passenger, city, flight, travel };
+const flightsParams = joi.object({
+    origin: joi.string(),
+    destination: joi.string(),
+    'smaller-date': joi.string()
+        .custom((value, helpers) => {
+            if (dayjs(value, "DD-MM-YYYY", true).isValid()) {
+                return value;
+            } else {
+                return helpers.error('string.invalidFormat');
+            }
+        })
+        .messages({
+        'string.invalidFormat': 'Date must be in the DD-MM-YYYY format!',
+        }),
+    'bigger-date': joi.string()        
+        .custom((value, helpers) => {
+            if (dayjs(value, "DD-MM-YYYY", true).isValid()) {
+                return value;
+            } else {
+                return helpers.error('string.invalidFormat');
+            }
+        })
+        .messages({
+        'string.invalidFormat': 'Date must be in the DD-MM-YYYY format!',
+        })
+});
+
+
+const schemas = { passenger, city, flight, travel, flightsParams };
 
 export default schemas;
