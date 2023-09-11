@@ -15,6 +15,8 @@ async function databaseConnection() {
         connectionString: process.env.DATABASE_URL
     };
 
+    if (process.env.NODE_ENV === "production") configDatabase.ssl = true;
+
     let db = new Pool(configDatabase);
 
     try {
