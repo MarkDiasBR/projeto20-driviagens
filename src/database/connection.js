@@ -1,9 +1,11 @@
 import chalk from 'chalk';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import databaseUtils from "../utils/databaseUtils.js";
+
 dotenv.config();
 
-const { name, port } = databaseNameAndPort(process.env.DATABASE_URL);
+const { name, port } = databaseUtils.stringConsoleFormatter(process.env.DATABASE_URL);
 
 async function databaseConnection() {
 
@@ -32,8 +34,3 @@ const db = await databaseConnection();
 
 export default db;
 
-//[UTIL] FORMATTING AID
-function databaseNameAndPort(dbString) {
-    const nameAndPortArray = dbString.split(':').slice(-1)[0].split('/').reverse();
-    return {name: nameAndPortArray[0], port: nameAndPortArray[1]};
-}
