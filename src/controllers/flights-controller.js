@@ -21,8 +21,6 @@ async function read(req, res, next) {
     
     const { origin, destination, 'smaller-date': smallerDate, 'bigger-date': biggerDate } = req.query;
 
-    console.log(req.query);
-
     try {
         const result = await flightsService.read(origin, destination, biggerDate, smallerDate); 
         res.status(httpStatus.OK).send(result);

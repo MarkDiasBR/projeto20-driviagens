@@ -19,6 +19,31 @@ async function getById(id) {
     );
 }
 
-const passengersRepository = { create, getById };
+async function read(name) {
+    let query = `
+        SELECT
+            CONCAT(p."firstName", ' ', p."lastName") AS passenger,
+            COUNT(t.id)::integer AS travels
+        FROM
+            passengers AS p
+            LEFT JOIN travels AS t 
+                ON p.id = t."passengerId"
+    `;
+
+    const queryParams = [];
+
+    if (name) {
+        query += ` WHERE p."firstName" ILIKE $1 OR p."lastName" ILIKE $1 `
+
+        queryParams.push(`%${name}%`)
+    }
+    
+    // Add ORDER BY clause
+    query += ` GROUP BY passenger ORDER BY travels DESC;`;
+
+    return await db.query(query, queryParams);  
+}
+
+const passengersRepository = { create, getById, read };
 
 export default passengersRepository;

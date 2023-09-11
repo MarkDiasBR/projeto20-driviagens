@@ -14,5 +14,6 @@ authRouter.post('/cities', schemaValidation(schemas.city), citiesController.crea
 authRouter.post('/flights', schemaValidation(schemas.flight), flightsController.create);
 authRouter.post('/travels', schemaValidation(schemas.travel), travelsController.create);
 authRouter.get('/flights', paramsSchemaValidation(schemas.flightsParams), flightsController.read);
+authRouter.get('/passengers/travels', paramsSchemaValidation(schemas.passengersParams), passengersController.read)
 
 export default authRouter;

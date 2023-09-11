@@ -5,6 +5,16 @@ async function create(firstName, lastName) {
     return await passengersRepository.create(firstName, lastName);
 }
 
-const passengersService = { create };
+async function read(name) {
+    const result = await passengersRepository.read(name);
+
+    if (result.rowCount > 10) {
+        throw errors.tooManyResults();
+    }
+
+    return result.rows;
+}
+
+const passengersService = { create, read };
 
 export default passengersService;

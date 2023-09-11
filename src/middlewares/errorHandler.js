@@ -30,6 +30,11 @@ export default function errorHandler(error, req, res, next) {
                 .status(httpStatus.BAD_REQUEST)
                 .send('🚫 Bad request!\n\n' + error.message);
 
+        case "tooManyResults":
+            return res
+                .status(httpStatus.INTERNAL_SERVER_ERROR)
+                .send('🚫 Internal Server Error!\n\n' + error.message);
+
         default:
             res
                 .status(httpStatus.INTERNAL_SERVER_ERROR)

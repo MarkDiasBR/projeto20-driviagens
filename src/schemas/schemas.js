@@ -100,7 +100,10 @@ const flightsParams = joi.object({
         })
 });
 
+const passengersParams = joi.object({
+    name: joi.string()
+})
 
-const schemas = { passenger, city, flight, travel, flightsParams };
+const schemas = { passenger, city, flight, travel, flightsParams, passengersParams };
 
 export default schemas;

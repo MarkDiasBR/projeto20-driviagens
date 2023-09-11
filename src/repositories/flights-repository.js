@@ -78,8 +78,7 @@ async function read(origin, destination, biggerDate, smallerDate) {
     
     // Add ORDER BY clause
     query += ' ORDER BY date';
-    console.log(query)
-    console.log('queryparams', queryParams)
+
     return await db.query(query, queryParams);  
 }
 
