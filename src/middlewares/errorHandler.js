@@ -1,40 +1,46 @@
 import httpStatus from "http-status";
 
 export default function errorHandler(error, req, res, next) {
-
     switch (error.type) {
         case "conflict":
         case "conflictingResource":
-            return res
-            .status(httpStatus.CONFLICT)
-            .send('🚫 Conflict!\n\n' + error.message);
-            
+            res
+                .status(httpStatus.CONFLICT)
+                .send('🚫 Conflict!\n\n' + error.message);
+            break;
+
         case "notFound": 
-            return res
+            res
                 .status(httpStatus.NOT_FOUND)
                 .send('🚫 Not found!\n\n' + error.message);
+            break;
 
         case "incompleteData":
         case "invalidId":
-            return res
+            res
                 .status(httpStatus.UNPROCESSABLE_ENTITY)
                 .send('🚫 Unprocessable entity!\n\n' + error.message);
-            
+            break;
+
         case "entity.parse.failed":
-            return res
+            res
                 .status(httpStatus.UNPROCESSABLE_ENTITY)
                 .send('🚫 Unprocessable entity!\n\n' + error.message + "\nYou probably have a field with empty value");
+            break;
 
         case "badRequest":
         case "invalidPageValue":
-            return res
+            res
                 .status(httpStatus.BAD_REQUEST)
                 .send('🚫 Bad request!\n\n' + error.message);
+            break;
 
         case "tooManyResults":
-            return res
+        case "dbConnectionFailed":
+            res
                 .status(httpStatus.INTERNAL_SERVER_ERROR)
                 .send('🚫 Internal Server Error!\n\n' + error.message);
+            break;
 
         default:
             res
@@ -42,5 +48,4 @@ export default function errorHandler(error, req, res, next) {
                 .send('🚫 Internal Server Error!\n\n' +"Sorry, something went wrong 😢");
     }
 }
-
     

@@ -35,4 +35,3 @@ async function databaseConnection() {
 const db = await databaseConnection();
 
 export default db;
-

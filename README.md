@@ -6,7 +6,7 @@ This project is currently in development.
 
 ## Built With:<br>
 Frameworks and Libraries: 
-Node, Express, Axios, PostgreSQL, Chalk, CORS, dotenv, Joi, http-status, dayjs, Nodemon (development only).<br>
+node, express, axios, pg, chalk, cors, dotenv, joi, http-status, dayjs, express-async-errors, nodemon (development only).<br>
 
 Services used to deployment: 
 Render (back-end), Render (database).<br>
