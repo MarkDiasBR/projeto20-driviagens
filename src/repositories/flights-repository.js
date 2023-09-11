@@ -18,7 +18,7 @@ async function getById(id) {
     );
 }
 
-async function read(origin, destination, biggerDate, smallerDate) {
+async function read(origin, destination, biggerDate, smallerDate, page) {
     let query = `
         SELECT
             f.id AS flight_id,
@@ -77,7 +77,15 @@ async function read(origin, destination, biggerDate, smallerDate) {
       
     
     // Add ORDER BY clause
-    query += ' ORDER BY date';
+    query += ' ORDER BY date LIMIT 10';
+
+    if (page) {
+        const pagesMinusOne = Number(page) - 1;
+
+        query +=  ` OFFSET ${10*pagesMinusOne}`
+    }
+    
+    query += `;`;
 
     return await db.query(query, queryParams);  
 }

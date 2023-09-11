@@ -26,6 +26,7 @@ export default function errorHandler(error, req, res, next) {
                 .send('🚫 Unprocessable entity!\n\n' + error.message + "\nYou probably have a field with empty value");
 
         case "badRequest":
+        case "invalidPageValue":
             return res
                 .status(httpStatus.BAD_REQUEST)
                 .send('🚫 Bad request!\n\n' + error.message);

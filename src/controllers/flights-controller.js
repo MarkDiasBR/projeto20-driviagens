@@ -19,10 +19,10 @@ async function create(req, res, next) {
 
 async function read(req, res, next) {
     
-    const { origin, destination, 'smaller-date': smallerDate, 'bigger-date': biggerDate } = req.query;
+    const { origin, destination, 'smaller-date': smallerDate, 'bigger-date': biggerDate, page } = req.query;
 
     try {
-        const result = await flightsService.read(origin, destination, biggerDate, smallerDate); 
+        const result = await flightsService.read(origin, destination, biggerDate, smallerDate, page); 
         res.status(httpStatus.OK).send(result);
     } catch (error) {
         next(error);

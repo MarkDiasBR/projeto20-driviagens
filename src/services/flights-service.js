@@ -21,7 +21,9 @@ async function create(origin, destination, date) {
     return await flightsRepository.create(origin, destination, date);
 }
 
-async function read(origin, destination, biggerDate, smallerDate) {
+async function read(origin, destination, biggerDate, smallerDate, page) {
+    if (page && isNaN(page) || Number(page) <= 0) throw errors.invalidPageValue();
+
     if (smallerDate && !biggerDate || !smallerDate && biggerDate) {
         throw errors.incompleteData();
     }
@@ -30,7 +32,12 @@ async function read(origin, destination, biggerDate, smallerDate) {
         throw errors.badRequest();
     }
 
-    const result = await flightsRepository.read(origin, destination, biggerDate, smallerDate);
+    const result = await flightsRepository.read(origin, destination, biggerDate, smallerDate, page);
+
+    if (result.rowCount > 10) {
+        throw errors.tooManyResults();
+    }
+
     return result.rows;
 }
 

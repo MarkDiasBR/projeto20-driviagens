@@ -19,7 +19,7 @@ async function getById(id) {
     );
 }
 
-async function read(name) {
+async function read(name, page) {
     let query = `
         SELECT
             CONCAT(p."firstName", ' ', p."lastName") AS passenger,
@@ -39,8 +39,16 @@ async function read(name) {
     }
     
     // Add ORDER BY clause
-    query += ` GROUP BY passenger ORDER BY travels DESC;`;
+    query += ` GROUP BY passenger ORDER BY travels DESC LIMIT 10`;
 
+    if (page) {
+        const pagesMinusOne = Number(page) - 1;
+
+        query +=  ` OFFSET ${10*pagesMinusOne}`
+    }
+
+    query += `;`;
+    
     return await db.query(query, queryParams);  
 }
 

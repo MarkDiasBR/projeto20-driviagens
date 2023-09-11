@@ -1,6 +1,7 @@
 import joi from 'joi';
 import dayjs from 'dayjs';
 import custommParseFormat from 'dayjs/plugin/customParseFormat.js';
+// import { conflictingResource } from '../errors/conflictingResource';
 
 dayjs.extend(custommParseFormat);
 
@@ -96,12 +97,24 @@ const flightsParams = joi.object({
             }
         })
         .messages({
-        'string.invalidFormat': 'Date must be in the DD-MM-YYYY format!',
-        })
+            'string.invalidFormat': 'Date must be in the DD-MM-YYYY format!',
+        }),
+    page: joi.any()
 });
 
 const passengersParams = joi.object({
-    name: joi.string()
+    name: joi.string(),
+    page: joi.any()
+        // .custom((value, helpers) => {
+        //     if (value <= 0) {
+        //         return helpers.error('invalidPageValue');
+        //     } else {
+        //         return value;
+        //     }
+        // })
+        // .messages({
+        // 'invalidPageValue': 'Invalid page value.',
+        // })
 })
 
 const schemas = { passenger, city, flight, travel, flightsParams, passengersParams };

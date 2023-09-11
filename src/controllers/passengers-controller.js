@@ -18,10 +18,10 @@ async function create(req, res) {
 }
 
 async function read(req, res, next) {
-    const { name } = req.query;
+    const { name, page } = req.query;
 
     try {
-        const result = await passengersService.read(name); 
+        const result = await passengersService.read(name, page); 
         res.status(httpStatus.OK).send(result);
     } catch (error) {
         next(error);
